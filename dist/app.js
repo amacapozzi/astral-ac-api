@@ -1,0 +1,22 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.app = void 0;
+const express_1 = __importDefault(require("express"));
+const morgan_1 = __importDefault(require("morgan"));
+const file_route_1 = require("./modules/routes/file.route");
+const cors_1 = __importDefault(require("cors"));
+exports.app = (0, express_1.default)();
+const body_parser_1 = __importDefault(require("body-parser"));
+const auth_route_1 = require("./modules/routes/auth.route");
+const hash_route_1 = require("./modules/routes/hash.route");
+exports.app.use(body_parser_1.default.json({ limit: "Infinity" }));
+exports.app.use(body_parser_1.default.urlencoded({ limit: "Infinity", extended: true }));
+exports.app.use((0, morgan_1.default)("dev"));
+exports.app.use(express_1.default.json());
+exports.app.use((0, cors_1.default)());
+exports.app.use("/file", file_route_1.fileRouter);
+exports.app.use("/hash", hash_route_1.hashRouter);
+exports.app.use("/auth", auth_route_1.authRouter);

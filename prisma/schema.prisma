@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+}
+
+enum CHEAT_TYPE {
+  DETECT
+  WARNING
+}
+
+enum SCAN_RESUL_TYPE {
+  LEGIT
+  SUSPICIOUS
+  CHEATER
+}
+
+enum PIN_GAME_TYPE {
+  IDDLE
+  MINECRAFT
+  FIVEM
+}
+
+model ClientStrings {
+  id String @id @default(uuid())
+  addedBy String
+  clientName String
+  clientHash String
+  processName String
+  severity CHEAT_TYPE
+  game PIN_GAME_TYPE
+  global Boolean @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Cheats {
+  id          String      @id @default(uuid())
+  processName String
+  clientName  String
+  clientHash  String
+  clientType  CHEAT_TYPE
+  scanResult  ScanResult? @relation(fields: [scanResultId], references: [id])
+  scanResultId Int?
+}
+
+model Warnings {
+  id          String      @id @default(uuid())
+  name String
+  description String
+  scanResult  ScanResult? @relation(fields: [scanResultId], references: [id])
+  scanResultId Int?
+}
+
+model recentFiles {
+  id          String      @id @default(uuid())
+  path String
+  openDate String
+  isSigned Boolean
+  scanResult  ScanResult? @relation(fields: [scanResultId], references: [id])
+  scanResultId Int?
+}
+
+
+model Process {
+  id String @id @default(uuid())
+  processName String
+  userId String
+}
+
+model Pin {
+  id          Int        @id @default(autoincrement())
+  userId      String
+  pin         String     @unique
+  game        PIN_GAME_TYPE
+  public Boolean @default(false)
+  used        Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  scanResult  ScanResult?
+}
+
+model ScanResult {
+  id        Int          @id @default(autoincrement())
+  username  String
+  hwid      String
+  recentFiles recentFiles[]
+  warnings Warnings[]
+  cheats    Cheats[]
+  type      SCAN_RESUL_TYPE
+  pin       Pin?         @relation(fields: [pinId], references: [id])
+  pinId     Int?         @unique
+}
