@@ -37,11 +37,15 @@ model ClientStrings {
   updatedAt   DateTime   @updatedAt
 }
 
+
+
 model Cheats {
   id          String      @id @default(uuid())
-  processName String
+  processName String?
   clientName  String
-  clientHash  String
+  clientHash  String?
+  clientDir String?
+  inInstance Boolean
   clientType  CHEAT_TYPE
   scanResult  ScanResult? @relation(fields: [scanResultId], references: [id])
   scanResultId Int?
@@ -84,13 +88,23 @@ model Pin {
 }
 
 model ScanResult {
-  id        Int          @id @default(autoincrement())
-  username  String
-  hwid      String
-  recentFiles recentFiles[]
-  warnings Warnings[]
-  cheats    Cheats[]
-  type      SCAN_RESUL_TYPE
-  pin       Pin?         @relation(fields: [pinId], references: [id])
-  pinId     Int?         @unique
+  id            Int            @id @default(autoincrement())
+  username      String
+  hwid          String
+  recentFiles   recentFiles[]
+  warnings      Warnings[]
+  cheats        Cheats[]
+  type          SCAN_RESUL_TYPE
+  pin           Pin?           @relation(fields: [pinId], references: [id])
+  pinId         Int?           @unique
+  discordUser   DiscordUser?   @relation(fields: [discordUserId], references: [id])
+  discordUserId String?       
+}
+
+model DiscordUser {
+  id           String       @id @default(uuid())
+  username     String
+  discordId    String
+  avatarUrl    String
+  scanResults  ScanResult[]
 }
