@@ -131,7 +131,7 @@ export const saveScanResult = async (req: Request, res: Response) => {
 
     await db.pin.update({
       where: { id: isValid.id },
-      data: { scanResult: { connect: { id: scanResult.id } } },
+      data: { used: true, scanResult: { connect: { id: scanResult.id } } },
       include: { scanResult: true },
     });
 
