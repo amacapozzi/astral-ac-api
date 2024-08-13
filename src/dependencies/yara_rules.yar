@@ -1,6 +1,6 @@
 import "pe"
 
-rule Skriptgg_detect {
+rule Skriptgg_detect_v1 {
     meta:
         name = "Skript Cheat"
     strings:
@@ -32,7 +32,7 @@ rule Skriptgg_detect {
         4 of them
 }
 
-rule GoshStrings_v1 {
+rule GoshStrings_v2 {
     meta:
         name = "Gosth Cheat"
     strings:
@@ -62,7 +62,7 @@ rule GoshStrings_v1 {
         8 of them
 }
 
-rule GenericCleaner {
+rule GenericCleaner_v1 {
     meta:
         name = "Generic Cleaner"
     strings:
@@ -72,7 +72,7 @@ rule GenericCleaner {
         any of ($ccleaner_signature, $privazer_signature)
 }
 
-rule GenericCheat_a {
+rule GenericCheat_a_v1 {
     meta:
         name = "Generic Cheat (a)"
     strings:
@@ -100,7 +100,7 @@ rule GenericCheat_a {
         1 of ($x*) and 7 of them
 }
 
-rule SaturnBypass_v1 {
+rule SaturnBypass_v2 {
     meta:
         name = "Saturn Bypass"
     strings:
@@ -113,7 +113,7 @@ rule SaturnBypass_v1 {
         1 of ($x*) and 4 of them
 }
 
-rule SkriptDLLStrings {
+rule SkriptDLLStrings_v1 {
    meta: 
    name = "Skript.gg"
    strings:
@@ -123,18 +123,48 @@ rule SkriptDLLStrings {
       $s4 = "nvldumd.dll" fullword ascii
       $s5 = "<assembly xmlns=\"urn:schemas-microsoft-com:asm.v1\" manifestVersion=\"1.0\"><trustInfo xmlns=\"urn:schemas-microsoft-com:asm.v3" ascii
       $s6 = "AppPolicyGetProcessTerminationMethod" fullword ascii
-      $s7 = "OpenProcessToken" fullword ascii
-      $s8 = "CreateProcessA" fullword ascii
-      $s9 = "CreateRemoteThread" fullword ascii
-      $s10 = "LoadLibraryA" fullword ascii
-      $s11 = "OpenProcess" fullword ascii
-      $s12 = "WriteProcessMemory" fullword ascii
-      $s13 = "VirtualAllocEx" fullword ascii
-      $s14 = "VirtualFreeEx" fullword ascii
-      $s15 = "SetWindowsHookExA" fullword ascii
-      $s16 = "SetWindowsHookExW" fullword ascii
-      $s17 = "GetModuleHandleA" fullword ascii
-      $s18 = "GetModuleHandleW" fullword ascii
+      $s7 = "CreateProcess" fullword ascii
+      $s8 = "DebugActiveProcess" fullword ascii
+      $s9 = "GetNativeSystemInfo" fullword ascii
+      $s10 = "GetProcAddress" fullword ascii
+      $s11 = "GetProcessHeap" fullword ascii
+      $s12 = "OpenProcess" fullword ascii
+      $s13 = "OpenProcessToken" fullword ascii
+      $s14 = "CreateProcessA" fullword ascii
+      $s15 = "CreateRemoteThread" fullword ascii
+      $s16 = "LoadLibraryA" fullword ascii
+      $s17 = "OpenProcess" fullword ascii
+      $s18 = "WriteProcessMemory" fullword ascii
+      $s19 = "VirtualAllocEx" fullword ascii
+      $s20 = "VirtualFreeEx" fullword ascii
+      $s21 = "SetWindowsHookExA" fullword ascii
+      $s22 = "SetWindowsHookExW" fullword ascii
+      $s23 = "GetModuleHandleA" fullword ascii
+      $s24 = "GetModuleHandleW" fullword ascii
    condition:
       4 of them
+}
+
+rule RedEngineStrings_v1 {
+    meta:
+        name = "RedEngine"
+    strings:
+        $s1 = "RedEngine"
+        $s2 = "RedEngine"
+        $s3 = "RedEngine"
+        $s4 = "RedEngine"
+    condition:
+        4 of them
+}
+
+rule TZInstaller_v1 {
+    meta:
+        name = "TZInstaller"
+    strings:
+        $s1 = "TZInstaller"
+        $s2 = "TZInstaller"
+        $s3 = "TZInstaller"
+        $s4 = "TZInstaller"
+    condition:
+        4 of them
 }
