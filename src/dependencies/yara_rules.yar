@@ -122,11 +122,11 @@ rule SaturnBypassUnique {
         date = "2024-08-12"
         
     strings:
-        $x1 = "!$512bdc60293a60db7ed2eac1ca48f0b5"
-        $x2 = "!$4e30516ead18d69fa829b709ec82c632"
-        $x3 = "!$ed5bc645366a2d70c419543279e82c69"
-        $x4 = "!$9df236927275373cfa0b7f31c2bdbf00"
-        $x5 = "!$d140ec7579dc36e3aaac33e85624b006"
+        $x1 = "!$512bdc60293a60db7ed2eac1ca48f0b5" ascii
+        $x2 = "!$4e30516ead18d69fa829b709ec82c632" ascii
+        $x3 = "!$ed5bc645366a2d70c419543279e82c69" ascii
+        $x4 = "!$9df236927275373cfa0b7f31c2bdbf00" ascii
+        $x5 = "!$d140ec7579dc36e3aaac33e85624b006" ascii
         
     condition:
         1 of ($x*) and 4 of them
