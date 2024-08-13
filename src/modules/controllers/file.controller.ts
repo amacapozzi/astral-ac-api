@@ -129,7 +129,7 @@ export const sendFileByName = async (req: Request, res: Response) => {
       process.cwd(),
       "src",
       "dependencies",
-      file.toString() + ".exe"
+      file.toString()
     );
 
     if (!fs.existsSync(fileDir)) {
