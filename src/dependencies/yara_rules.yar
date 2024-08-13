@@ -1,8 +1,5 @@
-
-       
 import "pe"
 
-       
 rule Skriptgg_detect {
     meta:
         description = "Detecta contenido relacionado con Skript.gg"
@@ -17,7 +14,7 @@ rule Skriptgg_detect {
         $s4 = "boostrap" fullword ascii /* score: '26.00'*/
         $s5 = "skript.gg" fullword ascii /* score: '39.00'*/
         $s6 = "104.26.0.61" fullword ascii /* score: '45.00'*/
-        $s7 = "www.skript.gg" fullword ascii /* score: '50.00'*/
+        $s7 = "www.skript.gg" fullword ascii /* score: '50.00'*/ 
         $s8 = "license.dat" fullword ascii /* score: '50.00'*/ 
         $s9 = "README.txt" fullword ascii /* score: '60.00'*/     
         $s10 = "https://skript.gg" ascii /* score: '45.00'*/
@@ -86,7 +83,6 @@ rule cleaners {
         any of ($ccleaner_signature, $privazer_signature)
 }
 
-
 rule EscapeService {
     meta:
         description = "Detecta cadenas específicas relacionadas con Gosh"
@@ -118,22 +114,20 @@ rule EscapeService {
         1 of ($x*) and 7 of them
 }
 
-rule SaturnBypass {
-meta:
-        description = "Detecta cadenas específicas relacionadas con Gosh"
+rule SaturnBypassUnique {
+    meta:
+        description = "Detecta cadenas específicas relacionadas con Saturn Bypass"
         author = "TuNombre"
-        name = "Saturn Bypass"
+        name = "Saturn Bypass Unique"
         date = "2024-08-12"
-
- strings:
+        
+    strings:
         $x1 = "!$512bdc60293a60db7ed2eac1ca48f0b5"
         $x2 = "!$4e30516ead18d69fa829b709ec82c632"
         $x3 = "!$ed5bc645366a2d70c419543279e82c69"
         $x4 = "!$9df236927275373cfa0b7f31c2bdbf00"
         $x5 = "!$d140ec7579dc36e3aaac33e85624b006"
-
-  condition:
+        
+    condition:
         1 of ($x*) and 4 of them
-
-
 }
