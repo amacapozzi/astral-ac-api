@@ -118,7 +118,7 @@ rule SaturnBypassUnique {
     meta:
         description = "Detecta cadenas específicas relacionadas con Saturn Bypass"
         author = "TuNombre"
-        name = "Saturn Bypass Unique"
+        name = "Saturn Bypass"
         date = "2024-08-12"
         
     strings:
