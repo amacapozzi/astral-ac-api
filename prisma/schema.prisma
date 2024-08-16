@@ -49,8 +49,6 @@ model ClientStrings {
   updatedAt   DateTime   @updatedAt
 }
 
-
-
 model Cheats {
   id          String      @id @default(uuid())
   processName String?
@@ -86,11 +84,12 @@ model Process {
   processName String
   userId String
 }
-
 model Pin {
   id          Int        @id @default(autoincrement())
   userId      String
   pin         String     @unique
+  scanned Boolean @default(false)
+  scanDuration String?
   game        PIN_GAME_TYPE
   public Boolean @default(false)
   used        Boolean    @default(false)
@@ -98,7 +97,6 @@ model Pin {
   updatedAt   DateTime   @updatedAt
   scanResult  ScanResult?
 }
-
 model ScanResult {
   id            Int            @id @default(autoincrement())
   username      String

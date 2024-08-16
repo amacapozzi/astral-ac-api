@@ -64,7 +64,8 @@ export const saveScanResult = async (req: Request, res: Response) => {
       return res.status(404).json({ error: true, message: "Pin not found" });
     }
 
-    const { cheats, recentFiles, warnings, username, hwid, discord } = req.body;
+    const { cheats, recentFiles, warnings, username, hwid, discord, scanTime } =
+      req.body;
 
     if (!username || !hwid || !discord) {
       return res
@@ -131,7 +132,12 @@ export const saveScanResult = async (req: Request, res: Response) => {
 
     await db.pin.update({
       where: { id: isValid.id },
-      data: { used: true, scanResult: { connect: { id: scanResult.id } } },
+      data: {
+        used: true,
+        scanned: true,
+        scanDuration: scanTime,
+        scanResult: { connect: { id: scanResult.id } },
+      },
       include: { scanResult: true },
     });
 
