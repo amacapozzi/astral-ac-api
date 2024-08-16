@@ -2,7 +2,9 @@ import { Request, Response } from "express";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+import db from "../../lib/db";
 import crypto from "crypto";
+import { PIN_GAME_TYPE } from "@prisma/client";
 
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
@@ -116,6 +118,25 @@ export const uploadFile = async (
     });
   }
 };
+
+export const uploadYaraRule = async (req: Request, res: Response) => {
+  if (!req.file) {
+    return res
+      .status(400)
+      .json({ error: true, message: "Please enter a valid file" });
+  }
+
+  if (!req.file.filename.endsWith(".yar")) {
+    return res
+      .status(400)
+      .json({ error: true, message: "Please enter a valid yara rule" });
+  }
+
+  return res
+    .status(200)
+    .json({ error: false, message: "Yara rule updated successfully" });
+};
+
 export const sendFileByName = async (req: Request, res: Response) => {
   try {
     const { file } = req.query;
@@ -142,5 +163,29 @@ export const sendFileByName = async (req: Request, res: Response) => {
       error: true,
       message: "An error occurred while sending the dependency",
     });
+  }
+};
+
+export const getUserConfig = async (req: Request, res: Response) => {
+  try {
+    const pin = await db.pin.findUnique({
+      where: { pin: req.query.pin?.toString() },
+    });
+
+    const userConfig = await db.yaraRule.findFirst({
+      where: {
+        loaded: true,
+        createdBy: pin?.userId,
+        game: req.query.game?.toString().toUpperCase() as PIN_GAME_TYPE,
+      },
+    });
+
+    const rule = userConfig?.rule;
+
+    return res.status(200).send(rule);
+  } catch {
+    return res
+      .status(500)
+      .json({ error: true, message: "Error to load user config" });
   }
 };

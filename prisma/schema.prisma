@@ -24,6 +24,18 @@ enum PIN_GAME_TYPE {
   FIVEM
 }
 
+model YaraRule {
+  id String @unique  @id @default(uuid())
+  createdBy String
+  ruleName String
+  loaded Boolean @default(false)
+  rule String
+  game PIN_GAME_TYPE
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+
 model ClientStrings {
   id String @id @default(uuid())
   addedBy String
