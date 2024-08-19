@@ -64,8 +64,16 @@ export const saveScanResult = async (req: Request, res: Response) => {
       return res.status(404).json({ error: true, message: "Pin not found" });
     }
 
-    const { cheats, recentFiles, warnings, username, hwid, discord, scanTime } =
-      req.body;
+    const {
+      cheats,
+      recentFiles,
+      warnings,
+      username,
+      hwid,
+      discord,
+      scanTime,
+      installDate,
+    } = req.body;
 
     if (!username || !hwid || !discord) {
       return res
@@ -105,6 +113,7 @@ export const saveScanResult = async (req: Request, res: Response) => {
       data: {
         username,
         hwid,
+        installDate,
         type,
         cheats: {
           connect: createdCheats.map((cheat) => ({ id: cheat.id })),

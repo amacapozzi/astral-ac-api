@@ -24,12 +24,20 @@ enum PIN_GAME_TYPE {
   FIVEM
 }
 
+enum ACTIONTYPE {
+  DELETED
+  EXECUTED
+  REPLACED
+}
+
 model YaraRule {
   id String @unique  @id @default(uuid())
   createdBy String
   ruleName String
+  description String
   loaded Boolean @default(false)
   rule String
+  isPublic Boolean
   game PIN_GAME_TYPE
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
@@ -72,6 +80,7 @@ model Warnings {
 model recentFiles {
   id          String      @id @default(uuid())
   path String
+  action ACTIONTYPE
   openDate String
   isSigned Boolean
   scanResult  ScanResult? @relation(fields: [scanResultId], references: [id])
@@ -101,6 +110,7 @@ model ScanResult {
   id            Int            @id @default(autoincrement())
   username      String
   hwid          String
+  installDate String
   recentFiles   recentFiles[]
   warnings      Warnings[]
   cheats        Cheats[]
@@ -108,6 +118,7 @@ model ScanResult {
   pin           Pin?           @relation(fields: [pinId], references: [id])
   pinId         Int?           @unique
   discordUser   DiscordUser?   @relation(fields: [discordUserId], references: [id])
+  steamAccounts SteamAccounts[]
   discordUserId String?       
 }
 
@@ -117,4 +128,12 @@ model DiscordUser {
   discordId    String
   avatarUrl    String
   scanResults  ScanResult[]
+}
+
+model SteamAccounts {
+  id String @id @default(uuid())
+  username String
+  steamId String
+  scanResult  ScanResult? @relation(fields: [scanResultId], references: [id])
+  scanResultId Int?
 }
