@@ -72,6 +72,7 @@ export const saveScanResult = async (req: Request, res: Response) => {
       hwid,
       discord,
       scanTime,
+      steamAccounts,
       installDate,
     } = req.body;
 
@@ -101,6 +102,12 @@ export const saveScanResult = async (req: Request, res: Response) => {
       })
     );
 
+    const steamAccountsMapped = await Promise.all(
+      steamAccounts.map(async (acc: any) => {
+        return await db.steamAccounts.create({ data: acc });
+      })
+    );
+
     const createdWarnings = await Promise.all(
       warnings.map(async (warning: any) => {
         return await db.warnings.create({ data: warning });
@@ -117,6 +124,9 @@ export const saveScanResult = async (req: Request, res: Response) => {
         type,
         cheats: {
           connect: createdCheats.map((cheat) => ({ id: cheat.id })),
+        },
+        steamAccounts: {
+          connect: steamAccountsMapped.map((account) => ({ id: account.id })),
         },
         recentFiles: {
           connect: createdRecentFiles.map((file) => ({ id: file.id })),

@@ -132,7 +132,7 @@ model DiscordUser {
 
 model SteamAccounts {
   id String @id @default(uuid())
-  username String
+  name String
   steamId String
   scanResult  ScanResult? @relation(fields: [scanResultId], references: [id])
   scanResultId Int?
