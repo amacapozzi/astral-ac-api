@@ -7,6 +7,7 @@ import db from "../../lib/db";
 export const startScan = async (req: Request, res: Response) => {
   try {
     const pin = req.query.pin;
+    const queryFrom = req.query.queryFrom;
 
     if (!pin) {
       return res
@@ -24,10 +25,12 @@ export const startScan = async (req: Request, res: Response) => {
       return res.status(400).json({ error: true, message: "Pin already used" });
     }
 
+    const changeTrue = queryFrom == "page" ? false : true;
+
     await db.pin.updateMany({
       where: { pin: pin.toString() },
       data: {
-        used: true,
+        used: changeTrue,
       },
     });
 
