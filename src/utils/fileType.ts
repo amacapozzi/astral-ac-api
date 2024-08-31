@@ -6,12 +6,14 @@ export const getFilePathByType = (
   game: PIN_GAME_TYPE,
   fileName?: string
 ) => {
-  switch (fileType) {
+  switch (fileType.toUpperCase()) {
     case "DEPENDENCIE":
       return fileName;
     case "CLI":
       return `${game.toLowerCase()}-cli.exe`;
     case "GUI":
       return `${game.toLowerCase()}-gui.exe`;
+    default:
+      return "";
   }
 };
