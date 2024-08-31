@@ -69,6 +69,7 @@ export const saveScanResult = async (req: Request, res: Response) => {
 
     const {
       cheats,
+      recordingSoftwares,
       recentFiles,
       warnings,
       username,
@@ -105,6 +106,11 @@ export const saveScanResult = async (req: Request, res: Response) => {
       })
     );
 
+    const recordSoftwares = await Promise.all(
+      recordingSoftwares.map(async (file: any) => {
+        return await db.recordingSoftwares.create({ data: file });
+      })
+    );
     const steamAccountsMapped = await Promise.all(
       steamAccounts.map(async (acc: any) => {
         return await db.steamAccounts.create({ data: acc });
@@ -127,6 +133,9 @@ export const saveScanResult = async (req: Request, res: Response) => {
         type,
         cheats: {
           connect: createdCheats.map((cheat) => ({ id: cheat.id })),
+        },
+        recordingSoftwares: {
+          connect: recordSoftwares.map((software) => ({ id: software.id })),
         },
         steamAccounts: {
           connect: steamAccountsMapped.map((account) => ({ id: account.id })),

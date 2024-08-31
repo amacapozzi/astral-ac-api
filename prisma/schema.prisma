@@ -69,6 +69,15 @@ model Cheats {
   scanResultId Int?
 }
 
+model RecordingSoftwares {
+  id          String      @id @default(uuid())
+  Pid String
+  Name String
+  StartTime String
+  scanResult  ScanResult? @relation(fields: [scanResultId], references: [id])
+  scanResultId Int?
+}
+
 model Warnings {
   id          String      @id @default(uuid())
   name String
@@ -113,6 +122,7 @@ model ScanResult {
   installDate String
   recentFiles   recentFiles[]
   warnings      Warnings[]
+  recordingSoftwares RecordingSoftwares[]
   cheats        Cheats[]
   type          SCAN_RESUL_TYPE
   pin           Pin?           @relation(fields: [pinId], references: [id])

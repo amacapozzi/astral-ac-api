@@ -15,3 +15,5 @@ export type Warning = {
   name: string;
   description: string;
 };
+
+export type FileType = "CLI" | "DEPENDENCIE" | "GUI";
