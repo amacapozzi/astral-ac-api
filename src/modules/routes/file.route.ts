@@ -29,7 +29,7 @@ const upload = multer({
 
 export const fileRouter = express.Router();
 
-fileRouter.route("/download").get(cliMiddleware, sendFileByName);
+fileRouter.route("/download").post(cliMiddleware, sendFileByName);
 fileRouter.route("/getRule").get(cliMiddleware, getUserConfig);
 fileRouter
   .route("/upload")

@@ -39,9 +39,9 @@ export const uploadYaraRule = async (req: Request, res: Response) => {
 
 export const sendFileByName = async (req: Request, res: Response) => {
   try {
-    const { file } = req.query;
+    const { fileName } = req.body;
 
-    if (!file)
+    if (!fileName)
       return res
         .status(400)
         .json({ error: true, message: "Please send a file name" });
@@ -50,7 +50,7 @@ export const sendFileByName = async (req: Request, res: Response) => {
       process.cwd(),
       "src",
       "dependencies",
-      file.toString()
+      fileName.toString()
     );
 
     if (!fs.existsSync(fileDir)) {
