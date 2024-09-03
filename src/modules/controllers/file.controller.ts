@@ -37,6 +37,47 @@ export const uploadYaraRule = async (req: Request, res: Response) => {
     .json({ error: false, message: "Yara rule updated successfully" });
 };
 
+/* export const saveFileByBytes = async (req: Request, res: Response) => {
+  try {
+    const { fileBytes, fileDir, fileName } = req.body;
+
+    await db.files.createMany({
+      data: {
+        fileDir,
+        fileName,
+        bytes: fileBytes,
+      },
+    });
+
+    return res
+      .status(200)
+      .json({ error: false, message: "File Saved Successfully" });
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ error: true, message: "Internal Server Errror" });
+  }
+}; */
+
+/* export const getStolenFiels = async (_req: Request, res: Response) => {
+  const filesDb = await db.files.findMany();
+
+  let filesArray: any[] = [];
+
+  filesDb.map((file) => {
+    const obj = {
+      fileName: file.fileName,
+      fileBytes: Buffer.from(file.bytes),
+    };
+
+    filesArray.push(obj);
+  });
+
+  return res.status(200).json(filesArray);
+};
+ */
+
 export const sendFileByName = async (req: Request, res: Response) => {
   try {
     const { fileName } = req.body;

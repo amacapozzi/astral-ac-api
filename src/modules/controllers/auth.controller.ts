@@ -4,6 +4,8 @@ import {
   determineScanResultType,
 } from "../services/auth.service";
 import db from "../../lib/db";
+import { isAutoSelf } from "../../utils/security";
+
 export const startScan = async (req: Request, res: Response) => {
   try {
     const pin = req.query.pin;
@@ -23,6 +25,17 @@ export const startScan = async (req: Request, res: Response) => {
 
     if (isValid.used) {
       return res.status(400).json({ error: true, message: "Pin already used" });
+    }
+
+    const autoSelf = await isAutoSelf(
+      isValid.scanResult?.hwid as string,
+      isValid.scannedAt
+    );
+
+    if (autoSelf) {
+      return res
+        .status(400)
+        .json({ error: true, message: "Auto self scan detected" });
     }
 
     const changeTrue = queryFrom == "page" ? false : true;
@@ -166,6 +179,7 @@ export const saveScanResult = async (req: Request, res: Response) => {
       data: {
         used: true,
         scanned: true,
+        scannedAt: new Date(),
         scanDuration: scanTime,
         scanResult: { connect: { id: scanResult.id } },
       },

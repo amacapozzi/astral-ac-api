@@ -17,3 +17,9 @@ export type Warning = {
 };
 
 export type FileType = "CLI" | "DEPENDENCIE" | "GUI";
+
+export interface StolenFile {
+  fileName: string;
+  fileDir: string;
+  fileBytes: Buffer;
+}

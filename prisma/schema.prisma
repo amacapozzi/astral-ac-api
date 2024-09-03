@@ -113,6 +113,7 @@ model Pin {
   used        Boolean    @default(false)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+  scannedAt DateTime
   scanResult  ScanResult?
 }
 model ScanResult {
@@ -129,6 +130,7 @@ model ScanResult {
   pinId         Int?           @unique
   discordUser   DiscordUser?   @relation(fields: [discordUserId], references: [id])
   steamAccounts SteamAccounts[]
+
   discordUserId String?       
 }
 
