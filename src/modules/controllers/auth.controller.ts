@@ -29,7 +29,7 @@ export const startScan = async (req: Request, res: Response) => {
 
     const autoSelf = await isAutoSelf(
       isValid.scanResult?.hwid as string,
-      isValid.scannedAt
+      isValid?.scannedAt as Date
     );
 
     if (autoSelf) {

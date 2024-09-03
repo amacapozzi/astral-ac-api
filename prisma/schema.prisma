@@ -113,7 +113,7 @@ model Pin {
   used        Boolean    @default(false)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  scannedAt DateTime
+  scannedAt DateTime?
   scanResult  ScanResult?
 }
 model ScanResult {
